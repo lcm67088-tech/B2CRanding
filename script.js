@@ -74,7 +74,7 @@
   const form = document.querySelector("[data-google-sheet-form]");
   if (!form) return;
 
-  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwL5wSDD-CNqVeBgRIgR-HDrIoOSekMQbqAHuiRIzAyc5E2VvYKLdVmK6BTYoh7k9C3/exec";
+  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyWeFUlMv8yklWIXquo6yrqdkkYN0cJedvds0h89hEXYJsKlNJC0Ve4jkFGad-rIwMn/exec";
   const status = form.querySelector("[data-form-status]");
   const submitButton = form.querySelector(".form-button");
 
