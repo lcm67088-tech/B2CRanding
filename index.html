@@ -671,19 +671,19 @@
           <form class="consult-form" data-google-sheet-form>
             <label>이름<input name="name" type="text" placeholder="홍길동" required /></label>
             <label>전화번호<input name="phone" type="tel" placeholder="010-0000-0000" required /></label>
-            <label>플레이스 URL<input name="placeUrl" type="url" placeholder="https://naver.me/..." /></label>
-            <label>메인 키워드<input name="keyword" type="text" placeholder="상위노출 희망 키워드" /></label>
-            <label>업종<input name="businessType" type="text" placeholder="예: 음식점, 뷰티, PT, 학원" /></label>
+            <label>플레이스 URL<input name="placeUrl" type="url" placeholder="https://naver.me/..." required /></label>
+            <label>메인 키워드<input name="keyword" type="text" placeholder="상위노출 희망 키워드" required /></label>
+            <label>업종<input name="businessType" type="text" placeholder="예: 음식점, 뷰티, PT, 학원" required /></label>
             <label>
               대행사 / 직광고주 여부
-              <select name="clientType">
+              <select name="clientType" required>
                 <option>직광고주</option>
                 <option>대행사</option>
               </select>
             </label>
             <label>
               월 광고비 예산
-              <select name="budget">
+              <select name="budget" required>
                 <option>500,000원 미만</option>
                 <option>500,000원~1,000,000원</option>
                 <option>1,000,000원~3,000,000원</option>
@@ -692,7 +692,7 @@
             </label>
             <label>
               문의사항
-              <textarea name="message" placeholder="이전에 진행한 광고, 불만족했던 부분, 현재 고민을 적어주세요."></textarea>
+              <textarea name="message" placeholder="이전에 진행한 광고, 불만족했던 부분, 현재 고민을 적어주세요." required></textarea>
             </label>
             <div class="form-consents" aria-label="필수 동의 항목">
               <div class="consent-item">
@@ -753,5 +753,18 @@
       </div>
       <a href="#top">맨 위로</a>
     </footer>
+
+    <div class="thanks-modal" data-thanks-modal role="dialog" aria-modal="true" aria-labelledby="thanks-title" aria-hidden="true">
+      <div class="thanks-modal__dialog">
+        <button class="thanks-modal__close" type="button" data-thanks-close aria-label="닫기">×</button>
+        <p class="eyebrow">접수 완료</p>
+        <h2 id="thanks-title">무료 진단 신청이 접수되었습니다.</h2>
+        <p>
+          영업일 기준 1~3일 이내로 연락 드리겠습니다.<br />
+          오늘 하루도 행복한 하루 되세요.
+        </p>
+        <button class="button button-primary" type="button" data-thanks-close>확인</button>
+      </div>
+    </div>
   </body>
 </html>

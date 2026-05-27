@@ -77,6 +77,37 @@
   const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyWeFUlMv8yklWIXquo6yrqdkkYN0cJedvds0h89hEXYJsKlNJC0Ve4jkFGad-rIwMn/exec";
   const status = form.querySelector("[data-form-status]");
   const submitButton = form.querySelector(".form-button");
+  const thanksModal = document.querySelector("[data-thanks-modal]");
+  const thanksCloseButtons = Array.from(document.querySelectorAll("[data-thanks-close]"));
+
+  const openThanksModal = () => {
+    if (!thanksModal) return;
+    thanksModal.classList.add("is-open");
+    thanksModal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+    thanksModal.querySelector("[data-thanks-close]")?.focus();
+  };
+
+  const closeThanksModal = () => {
+    if (!thanksModal) return;
+    thanksModal.classList.remove("is-open");
+    thanksModal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  };
+
+  thanksCloseButtons.forEach((button) => {
+    button.addEventListener("click", closeThanksModal);
+  });
+
+  thanksModal?.addEventListener("click", (event) => {
+    if (event.target === thanksModal) closeThanksModal();
+  });
+
+  window.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && thanksModal?.classList.contains("is-open")) {
+      closeThanksModal();
+    }
+  });
 
   form.querySelectorAll(".consent-check input").forEach((input) => {
     input.addEventListener("click", (event) => {
@@ -98,7 +129,10 @@
       return;
     }
 
-    if (!form.reportValidity()) return;
+    if (!form.reportValidity()) {
+      setStatus("필수 입력 항목을 모두 채워주세요.", "error");
+      return;
+    }
 
     const formData = new FormData(form);
     const payload = {
@@ -130,7 +164,8 @@
       });
 
       form.reset();
-      setStatus("신청이 접수되었습니다. 빠르게 확인 후 연락드리겠습니다.", "success");
+      setStatus("", "");
+      openThanksModal();
     } catch (error) {
       setStatus("전송 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.", "error");
     } finally {
