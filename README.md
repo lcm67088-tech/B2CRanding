@@ -1,10 +1,9 @@
 # B2CRanding
 
-Papa Company B2C landing page deployment files.
+파파컴퍼니 B2C 랜딩 페이지 정적 배포 파일입니다.
 
-## Current Version
+## Files
 
-- Version: v2
 - `index.html`: landing page
 - `styles.css`: page styles
 - `script.js`: interactions and Google Sheets lead form submission
