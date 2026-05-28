@@ -5,6 +5,7 @@ const HEADERS = [
   "접수일시",
   "이름",
   "전화번호",
+  "플레이스명",
   "플레이스 URL",
   "플레이스 MID값",
   "수정된 플레이스 주소",
@@ -34,6 +35,7 @@ function doPost(event) {
       new Date(),
       payload.name || "",
       payload.phone || "",
+      payload.placeName || "",
       payload.placeUrl || "",
     ];
     const rightValues = [
@@ -50,7 +52,7 @@ function doPost(event) {
 
     const nextRow = findNextEmptyRow_(sheet);
     sheet.getRange(nextRow, 1, 1, leftValues.length).setValues([leftValues]);
-    sheet.getRange(nextRow, 7, 1, rightValues.length).setValues([rightValues]);
+    sheet.getRange(nextRow, 8, 1, rightValues.length).setValues([rightValues]);
 
     return jsonResponse({ ok: true, row: nextRow });
   } catch (error) {
