@@ -1,28 +1,4 @@
 (() => {
-  const trackPixelEvent = (eventName, params = {}) => {
-    if (typeof window.fbq !== "function") return;
-
-    window.fbq("trackCustom", eventName, {
-      page_url: window.location.href,
-      ...params,
-    });
-  };
-
-  window.papaTrackPixelEvent = trackPixelEvent;
-
-  document.addEventListener("click", (event) => {
-    const target = event.target.closest("[data-track-name]");
-    if (!target) return;
-
-    trackPixelEvent(target.dataset.trackName, {
-      button_text: target.textContent.trim(),
-      href: target.getAttribute("href") || "",
-      element_type: target.tagName.toLowerCase(),
-    });
-  });
-})();
-
-(() => {
   const track = document.querySelector(".who-track");
   if (!track || track.dataset.enhanced === "true") return;
 
@@ -55,7 +31,6 @@
 
   const modalImage = modal.querySelector("img");
   const closeButton = modal.querySelector(".rank-modal__close");
-  closeButton.dataset.trackName = "RankModalCloseClick";
 
   const close = () => {
     modal.classList.remove("is-open");
@@ -63,9 +38,8 @@
     document.body.style.overflow = "";
   };
 
-  rankImages.forEach((image, index) => {
+  rankImages.forEach((image) => {
     const trigger = image.closest(".rank-image");
-    trigger.dataset.trackName = `CaseRankImageClick${String(index + 1).padStart(2, "0")}`;
     trigger.setAttribute("tabindex", "0");
     trigger.setAttribute("role", "button");
     trigger.setAttribute("aria-label", `${image.alt} 크게 보기`);
@@ -82,10 +56,6 @@
     trigger.addEventListener("keydown", (event) => {
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
-        window.papaTrackPixelEvent?.(trigger.dataset.trackName, {
-          button_text: trigger.getAttribute("aria-label") || "",
-          element_type: "keyboard_button",
-        });
         open();
       }
     });
@@ -104,12 +74,11 @@
   const form = document.querySelector("[data-google-sheet-form]");
   if (!form) return;
 
-  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyRnSj8IUUZSydtXkBF_JVc_Er1dba3h7wo-aZJ8nIw0eQOg5qQYE2KwGU8ojW23Fyu/exec";
+  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyWeFUlMv8yklWIXquo6yrqdkkYN0cJedvds0h89hEXYJsKlNJC0Ve4jkFGad-rIwMn/exec";
   const status = form.querySelector("[data-form-status]");
   const submitButton = form.querySelector(".form-button");
   const thanksModal = document.querySelector("[data-thanks-modal]");
   const thanksCloseButtons = Array.from(document.querySelectorAll("[data-thanks-close]"));
-  const placeIdentityInputs = Array.from(form.querySelectorAll("[data-place-identity]"));
 
   const openThanksModal = () => {
     if (!thanksModal) return;
@@ -152,20 +121,6 @@
     status.dataset.type = type;
   };
 
-  const validatePlaceIdentity = () => {
-    const hasIdentity = placeIdentityInputs.some((input) => input.value.trim() !== "");
-
-    placeIdentityInputs.forEach((input, index) => {
-      input.setCustomValidity(hasIdentity || index !== 0 ? "" : "플레이스명 또는 플레이스 URL 중 하나를 입력해주세요.");
-    });
-
-    return hasIdentity;
-  };
-
-  placeIdentityInputs.forEach((input) => {
-    input.addEventListener("input", validatePlaceIdentity);
-  });
-
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
@@ -174,10 +129,8 @@
       return;
     }
 
-    validatePlaceIdentity();
-
     if (!form.reportValidity()) {
-      setStatus("이름, 전화번호, 플레이스명 또는 플레이스 URL을 입력해주세요.", "error");
+      setStatus("필수 입력 항목을 모두 채워주세요.", "error");
       return;
     }
 
@@ -185,7 +138,6 @@
     const payload = {
       name: formData.get("name") || "",
       phone: formData.get("phone") || "",
-      placeName: formData.get("placeName") || "",
       placeUrl: formData.get("placeUrl") || "",
       keyword: formData.get("keyword") || "",
       businessType: formData.get("businessType") || "",
@@ -213,14 +165,6 @@
 
       form.reset();
       setStatus("", "");
-      if (typeof window.fbq === "function") {
-        window.fbq("track", "Lead");
-      }
-      window.papaTrackPixelEvent?.("LeadFormSubmitSuccess", {
-        client_type: payload.clientType,
-        budget: payload.budget,
-        business_type: payload.businessType,
-      });
       openThanksModal();
     } catch (error) {
       setStatus("전송 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.", "error");
