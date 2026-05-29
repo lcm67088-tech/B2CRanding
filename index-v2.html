@@ -30,18 +30,18 @@
   </head>
   <body>
     <header class="site-header">
-      <a class="brand" href="#top" aria-label="파파컴퍼니 홈">
+      <a class="brand" href="#top" aria-label="파파컴퍼니 홈" data-track-name="HeaderLogoClick">
         <span class="brand-mark" aria-hidden="true"></span>
         파파컴퍼니
       </a>
       <nav aria-label="주요 섹션">
-        <a href="#case">성공 사례</a>
-        <a href="#effect">노출 효과</a>
-        <a href="#process">운영 방식</a>
-        <a href="#packages">패키지</a>
-        <a href="#notice">주의사항</a>
+        <a href="#case" data-track-name="NavCaseClick">성공 사례</a>
+        <a href="#effect" data-track-name="NavEffectClick">노출 효과</a>
+        <a href="#process" data-track-name="NavProcessClick">운영 방식</a>
+        <a href="#packages" data-track-name="NavPackagesClick">패키지</a>
+        <a href="#notice" data-track-name="NavNoticeClick">주의사항</a>
       </nav>
-      <a class="header-cta" href="#consult">무료 진단</a>
+      <a class="header-cta" href="#consult" data-track-name="HeaderFreeDiagnosisClick">무료 진단</a>
     </header>
 
     <main id="top">
@@ -63,8 +63,8 @@
             <span class="keyword-accent">함께 성장합니다</span>.
           </p>
           <div class="hero-actions">
-            <a class="button button-primary" href="#consult">무료 플레이스 진단 신청</a>
-            <a class="button button-ghost" href="#case">성공 사례 보기</a>
+            <a class="button button-primary" href="#consult" data-track-name="HeroFreeDiagnosisClick">무료 플레이스 진단 신청</a>
+            <a class="button button-ghost" href="#case" data-track-name="HeroCaseClick">성공 사례 보기</a>
           </div>
           <div class="hero-dashboard" aria-label="플레이스 진단 예시">
             <div class="map-card">
@@ -594,7 +594,7 @@
             </div>
             <div class="membership-cta">
               <p>우리 매장에 필요한 <strong class="keyword-accent">관리 항목</strong>을 먼저 확인해보세요.</p>
-              <a class="button button-primary" href="#consult">지금 무료 진단 받아보기</a>
+              <a class="button button-primary" href="#consult" data-track-name="PackageFreeDiagnosisClick">지금 무료 진단 받아보기</a>
             </div>
           </div>
         </div>
@@ -605,7 +605,7 @@
           <p class="eyebrow">EVENT</p>
           <h2>지금 진단 신청 시, <span class="keyword-accent">첫 달 점검 리포트</span> 제공</h2>
           <p>신청 후 우리 가게 네이버 상태와 메인 키워드 기준으로 <strong class="keyword-accent">먼저 볼 항목</strong>을 정리해드립니다.</p>
-          <a class="button button-primary" href="#consult">무료 진단 신청하기</a>
+          <a class="button button-primary" href="#consult" data-track-name="NoticeFreeDiagnosisClick">무료 진단 신청하기</a>
         </div>
       </section>
 
@@ -657,7 +657,7 @@
             </article>
             <article>
               <span class="notice-icon" aria-hidden="true"></span>
-              <h3><span class="keyword-accent">무리하게 받지 않습니다</span></h3>
+              <h3><span class="notice-title-line"><span class="keyword-accent">무리하게 받지</span></span><span class="notice-title-line"><span class="keyword-accent">않습니다</span></span></h3>
               <div class="notice-copy">
                 <p>
                   플레이스 관리는 지역과 업종에 따라
@@ -765,7 +765,7 @@
               </div>
             </div>
             <p class="form-status" data-form-status role="status" aria-live="polite"></p>
-            <button class="button button-primary form-button" type="submit">무료 플레이스 진단 신청</button>
+            <button class="button button-primary form-button" type="submit" data-track-name="LeadFormSubmitClick">무료 플레이스 진단 신청</button>
           </form>
         </div>
       </section>
@@ -776,19 +776,19 @@
         <strong>파파컴퍼니</strong>
         <p>네이버 플레이스 점검과 월간 관리 리포트</p>
       </div>
-      <a href="#top">맨 위로</a>
+      <a href="#top" data-track-name="FooterTopClick">맨 위로</a>
     </footer>
 
     <div class="thanks-modal" data-thanks-modal role="dialog" aria-modal="true" aria-labelledby="thanks-title" aria-hidden="true">
       <div class="thanks-modal__dialog">
-        <button class="thanks-modal__close" type="button" data-thanks-close aria-label="닫기">×</button>
+        <button class="thanks-modal__close" type="button" data-thanks-close aria-label="닫기" data-track-name="ThanksModalCloseIconClick">×</button>
         <p class="eyebrow">접수 완료</p>
         <h2 id="thanks-title">무료 진단 신청이 접수되었습니다.</h2>
         <p>
           영업일 기준 1~3일 이내로 연락 드리겠습니다.<br />
           오늘 하루도 행복한 하루 되세요.
         </p>
-        <button class="button button-primary" type="button" data-thanks-close>확인</button>
+        <button class="button button-primary" type="button" data-thanks-close data-track-name="ThanksModalConfirmClick">확인</button>
       </div>
     </div>
     <script type="text/javascript">

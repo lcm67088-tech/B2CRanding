@@ -1,4 +1,28 @@
 (() => {
+  const trackPixelEvent = (eventName, params = {}) => {
+    if (typeof window.fbq !== "function") return;
+
+    window.fbq("trackCustom", eventName, {
+      page_url: window.location.href,
+      ...params,
+    });
+  };
+
+  window.papaTrackPixelEvent = trackPixelEvent;
+
+  document.addEventListener("click", (event) => {
+    const target = event.target.closest("[data-track-name]");
+    if (!target) return;
+
+    trackPixelEvent(target.dataset.trackName, {
+      button_text: target.textContent.trim(),
+      href: target.getAttribute("href") || "",
+      element_type: target.tagName.toLowerCase(),
+    });
+  });
+})();
+
+(() => {
   const track = document.querySelector(".who-track");
   if (!track || track.dataset.enhanced === "true") return;
 
@@ -31,6 +55,7 @@
 
   const modalImage = modal.querySelector("img");
   const closeButton = modal.querySelector(".rank-modal__close");
+  closeButton.dataset.trackName = "RankModalCloseClick";
 
   const close = () => {
     modal.classList.remove("is-open");
@@ -38,8 +63,9 @@
     document.body.style.overflow = "";
   };
 
-  rankImages.forEach((image) => {
+  rankImages.forEach((image, index) => {
     const trigger = image.closest(".rank-image");
+    trigger.dataset.trackName = `CaseRankImageClick${String(index + 1).padStart(2, "0")}`;
     trigger.setAttribute("tabindex", "0");
     trigger.setAttribute("role", "button");
     trigger.setAttribute("aria-label", `${image.alt} 크게 보기`);
@@ -56,6 +82,10 @@
     trigger.addEventListener("keydown", (event) => {
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
+        window.papaTrackPixelEvent?.(trigger.dataset.trackName, {
+          button_text: trigger.getAttribute("aria-label") || "",
+          element_type: "keyboard_button",
+        });
         open();
       }
     });
@@ -183,6 +213,14 @@
 
       form.reset();
       setStatus("", "");
+      if (typeof window.fbq === "function") {
+        window.fbq("track", "Lead");
+      }
+      window.papaTrackPixelEvent?.("LeadFormSubmitSuccess", {
+        client_type: payload.clientType,
+        budget: payload.budget,
+        business_type: payload.businessType,
+      });
       openThanksModal();
     } catch (error) {
       setStatus("전송 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.", "error");
