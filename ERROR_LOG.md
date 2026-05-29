@@ -14,3 +14,6 @@
 - 로컬 `node_modules`의 `playwright` 실행을 시도했으나 `playwright-core` 모듈이 없어 실패했다.
   - 원인: `E:\codex\Randing\node_modules` 의존성 설치가 불완전했다.
   - 조치: Codex 번들 런타임의 `Node.js`(노드제이에스: 자바스크립트 실행 환경)와 패키지를 사용해 재검증한다.
+- `node --check ops\google-sheet-submit.apps-script.gs`로 `Google Apps Script`(구글 앱스 스크립트: 구글 서비스 자동화 코드) 문법 검사를 시도했으나 `.gs` 확장자를 `Node.js`가 직접 처리하지 못해 실패했다.
+  - 원인: `Node.js` 문법 검사 명령은 `.gs` 확장자를 기본 자바스크립트 파일로 인식하지 않는다.
+  - 조치: 파일 내용을 읽어 `Function` 생성자로 파싱하는 방식으로 문법 검사를 대체한다.

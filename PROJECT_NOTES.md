@@ -8,6 +8,10 @@
 - `assets/` 폴더의 이미지와 리소스는 그대로 유지한다.
 - `v2` 랜딩 페이지 내용을 기본 배포 파일인 `index.html`, `styles.css`, `script.js`에 반영한다.
 - 기존 기본 파일은 `archives/2026-05-29-before-v2/`에 보관한다.
+- 설문 응답 시트의 실제 컬럼 순서는 `접수일시`, `이름`, `전화번호`, `플레이스명`, `플레이스 URL`, `메인 키워드`, `업종`, `대행사/직광고주`, `월 광고비 예산`, `문의사항`, `개인정보 수집·이용 동의`, `제3자 정보 제공 동의`, `페이지 URL`, `사용자 환경`, `플레이스 MID값`, `수정된 플레이스 주소`이다.
+- 폼에는 새 입력칸을 추가하지 않고, 현재 폼 입력값만 시트 헤더명 기준으로 매핑한다.
+- `플레이스 MID값`, `수정된 플레이스 주소`는 현재 폼에 입력값이 없으므로 빈칸으로 저장한다.
+- 새 `Google Apps Script`(구글 앱스 스크립트: 구글 서비스 자동화 코드) 웹 앱 URL은 `https://script.google.com/macros/s/AKfycbzwg-ZKLZSYVLuZK6vTWBlGL8gg7fvU4tFIAtLlMX6xTbs1qdYYPRhaJ6TLINaPq3EH/exec`이다.
 
 ## 배포 참고
 

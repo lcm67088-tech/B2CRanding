@@ -104,7 +104,7 @@
   const form = document.querySelector("[data-google-sheet-form]");
   if (!form) return;
 
-  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyRnSj8IUUZSydtXkBF_JVc_Er1dba3h7wo-aZJ8nIw0eQOg5qQYE2KwGU8ojW23Fyu/exec";
+  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzwg-ZKLZSYVLuZK6vTWBlGL8gg7fvU4tFIAtLlMX6xTbs1qdYYPRhaJ6TLINaPq3EH/exec";
   const status = form.querySelector("[data-form-status]");
   const submitButton = form.querySelector(".form-button");
   const thanksModal = document.querySelector("[data-thanks-modal]");

@@ -35,3 +35,15 @@ archives/2026-05-29-before-v2/
 ```
 
 서버 배포 폴더가 아직 `GitHub`(깃허브: 코드 저장소 서비스)와 직접 연결되어 있지 않다면, 서버에서 해당 폴더를 백업한 뒤 이 저장소를 기준으로 연결해야 합니다.
+
+## 설문 응답 시트
+
+상담 폼은 `script.js`와 `script-v2.js`에서 `Google Apps Script`(구글 앱스 스크립트: 구글 서비스 자동화 코드)로 전송됩니다.
+
+시트 저장 로직은 `ops/google-sheet-submit.apps-script.gs`에 있으며, 시트 헤더명 기준으로 값을 매핑합니다. 현재 폼에 없는 `플레이스 MID값`, `수정된 플레이스 주소` 컬럼은 빈칸으로 저장합니다.
+
+현재 웹 앱 URL:
+
+```text
+https://script.google.com/macros/s/AKfycbzwg-ZKLZSYVLuZK6vTWBlGL8gg7fvU4tFIAtLlMX6xTbs1qdYYPRhaJ6TLINaPq3EH/exec
+```

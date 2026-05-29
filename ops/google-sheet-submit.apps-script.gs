@@ -5,9 +5,8 @@ const HEADERS = [
   "접수일시",
   "이름",
   "전화번호",
+  "플레이스명",
   "플레이스 URL",
-  "플레이스 MID값",
-  "수정된 플레이스 주소",
   "메인 키워드",
   "업종",
   "대행사/직광고주",
@@ -17,6 +16,8 @@ const HEADERS = [
   "제3자 정보 제공 동의",
   "페이지 URL",
   "사용자 환경",
+  "플레이스 MID값",
+  "수정된 플레이스 주소",
 ];
 
 function doPost(event) {
@@ -30,27 +31,10 @@ function doPost(event) {
 
     ensureHeader_(sheet);
 
-    const leftValues = [
-      new Date(),
-      payload.name || "",
-      payload.phone || "",
-      payload.placeUrl || "",
-    ];
-    const rightValues = [
-      payload.keyword || "",
-      payload.businessType || "",
-      payload.clientType || "",
-      payload.budget || "",
-      payload.message || "",
-      payload.privacyConsent || "",
-      payload.thirdPartyConsent || "",
-      payload.pageUrl || "",
-      payload.userAgent || "",
-    ];
-
     const nextRow = findNextEmptyRow_(sheet);
-    sheet.getRange(nextRow, 1, 1, leftValues.length).setValues([leftValues]);
-    sheet.getRange(nextRow, 7, 1, rightValues.length).setValues([rightValues]);
+    const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+    const rowValues = headers.map((header) => getPayloadValueByHeader_(header, payload));
+    sheet.getRange(nextRow, 1, 1, rowValues.length).setValues([rowValues]);
 
     return jsonResponse({ ok: true, row: nextRow });
   } catch (error) {
@@ -66,8 +50,50 @@ function doGet() {
 }
 
 function ensureHeader_(sheet) {
-  sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
+  const lastColumn = Math.max(sheet.getLastColumn(), HEADERS.length);
+  const currentHeaders = sheet.getRange(1, 1, 1, lastColumn).getValues()[0];
+  const hasExistingHeaders = currentHeaders.some((value) => String(value || "").trim() !== "");
+
+  if (!hasExistingHeaders) {
+    sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
+  }
+
   sheet.setFrozenRows(1);
+}
+
+function getPayloadValueByHeader_(header, payload) {
+  const normalizedHeader = normalizeHeader_(header);
+  const values = {
+    "접수일시": new Date(),
+    "이름": payload.name || "",
+    "전화번호": payload.phone || "",
+    "플레이스명": payload.placeName || "",
+    "플레이스URL": payload.placeUrl || "",
+    "메인키워드": payload.keyword || "",
+    "업종": payload.businessType || "",
+    "대행사직광고주": payload.clientType || "",
+    "월광고비예산": payload.budget || "",
+    "문의사항": payload.message || "",
+    "개인정보수집이용동의": payload.privacyConsent || "",
+    "제3자정보제공동의": payload.thirdPartyConsent || "",
+    "페이지URL": payload.pageUrl || "",
+    "사용자환경": payload.userAgent || "",
+    "플레이스MID값": "",
+    "수정된플레이스주소": "",
+    "수정할플레이스주소": "",
+  };
+
+  return Object.prototype.hasOwnProperty.call(values, normalizedHeader)
+    ? values[normalizedHeader]
+    : "";
+}
+
+function normalizeHeader_(value) {
+  return String(value || "")
+    .replace(/\s+/g, "")
+    .replace(/[·ㆍ・]/g, "")
+    .replace(/[\/_-]/g, "")
+    .trim();
 }
 
 function findNextEmptyRow_(sheet) {
